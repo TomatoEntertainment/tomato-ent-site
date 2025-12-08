@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tomato Entertainment - Jogos Digitais</title>
     <style>
         * {
@@ -16,6 +16,7 @@
             background: #0a0a0a;
             color: #ffffff;
             overflow-x: hidden;
+            width: 100%;
         }
 
         .bg-animation {
@@ -37,6 +38,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
+            pointer-events: none;
         }
 
         .particle {
@@ -135,13 +137,14 @@
 
         .hero {
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 0 20px;
             z-index: 1;
+            width: 100%;
         }
 
         .hero::before {
@@ -165,6 +168,8 @@
         .hero-content {
             position: relative;
             z-index: 2;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .hero-content h1 {
@@ -177,6 +182,7 @@
             background-clip: text;
             filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
             letter-spacing: 2px;
+            word-wrap: break-word;
         }
 
         .hero-content p {
@@ -323,7 +329,7 @@
         .game-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* GARANTINDO O COVER NO CSS TAMBEM */
+            object-fit: cover;
             transition: transform 0.4s;
         }
 
@@ -365,7 +371,7 @@
 
         @keyframes glow-red {
             0%, 100% { box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-            50% { box-shadow: 0 4px 25px rgba(255, 0, 0, 0.6); }
+            50% { box-shadow: 0 4px 25px rgba(0, 255, 0, 0.6); }
         }
 
         .game-info h3 {
@@ -488,38 +494,47 @@
             color: #aaaaaa;
         }
 
-        /* OTIMIZAÇÃO PARA MOBILE (AQUI ESTÁ A MÁGICA) */
+        /* --- OTIMIZAÇÃO PARA MOBILE (CORREÇÃO DO CORTE) --- */
         @media (max-width: 768px) {
             header {
-                padding: 15px 20px; /* Reduz padding lateral */
-                flex-direction: column; /* Coloca logo em cima e menu embaixo em telas pequenas */
+                padding: 15px 20px;
+                flex-direction: column;
                 gap: 15px;
             }
 
+            .logo {
+                font-size: 24px; /* Logo um pouco menor no mobile */
+            }
+
             .hero {
-                padding: 0 20px;
+                padding: 0 30px; /* Mais espaço lateral para não cortar */
+                min-height: 80vh; /* Altura um pouco menor no mobile */
             }
 
             .hero-content h1 {
-                font-size: 42px; /* Reduz fonte do título para não estourar */
+                font-size: 32px; /* Fonte BEM menor para caber */
                 line-height: 1.2;
+                letter-spacing: 0; /* Remove espaçamento entre letras */
+                word-wrap: break-word; /* Garante que quebre se precisar */
             }
 
             .hero-content p {
-                font-size: 18px;
+                font-size: 16px; /* Fonte menor para o parágrafo */
+                padding: 0 10px; /* Um pouco de respiro lateral no texto */
             }
 
-            .games-section {
-                padding: 60px 20px; /* Mais espaço lateral no mobile */
+            .cta-button {
+                padding: 15px 35px; /* Botão um pouco menor */
+                font-size: 16px;
+            }
+
+            .games-section, .about-section {
+                padding: 60px 20px;
             }
 
             .games-grid {
-                grid-template-columns: 1fr; /* Garante 1 coluna apenas */
+                grid-template-columns: 1fr;
                 gap: 30px;
-            }
-
-            .about-section {
-                padding: 60px 20px; /* Mais espaço lateral no mobile */
             }
 
             .about-content {
@@ -528,7 +543,7 @@
             }
 
             .about-text {
-                text-align: center; /* Centraliza texto no mobile */
+                text-align: center;
             }
 
             .about-text p {
@@ -540,12 +555,12 @@
             }
 
             .about-image {
-                height: 300px; /* Altura menor para imagem no mobile */
+                height: 300px;
                 font-size: 80px;
             }
 
             .section-title {
-                font-size: 36px;
+                font-size: 32px;
                 margin-bottom: 40px;
             }
 
@@ -631,8 +646,8 @@
     </section>
 
   <footer id="contato">
-        <p>© 2024 Tomato Entertainment. Todos os direitos reservados.</p>
-        <p>Criando o futuro do entretenimento digital</p>
+        <p>© 2025 Tomato Entertainment. Todos os direitos reservados.</p>
+        
         
         <p style="margin: 15px 0;">
             <span style="color: #ff0000;">Contato:</span> 
