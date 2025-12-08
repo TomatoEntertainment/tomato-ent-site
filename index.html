@@ -19,55 +19,68 @@
             width: 100%;
         }
 
-        /* --- ESTILOS DA TELA DE INTRODUÇÃO (NOVO) --- */
+        /* --- TELA DE INTRODUÇÃO (SPLASH SCREEN) ATUALIZADA --- */
         .intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #000000;
-            z-index: 9999; /* Garante que fique acima de tudo */
+            /* Fundo Carmesim Profundo (Degradê) para dar contraste ao texto laranja */
+            background: linear-gradient(135deg, #2b0000, #8b0000);
+            z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: fadeOutIntro 1s ease-in-out 3.5s forwards; /* Espera 3.5s e desaparece */
+            animation: fadeOutIntro 1s ease-in-out 3.5s forwards;
         }
 
-        .intro-text {
-            font-size: 60px;
-            font-weight: 900;
-            text-transform: uppercase;
-            /* O gradiente que faz o efeito de brilho */
-            background: linear-gradient(90deg, #8b0000, #ff0000, #ffffff, #ff0000, #8b0000);
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Estilos do Texto da Intro (Igual ao Hero) */
+        .intro-top, .intro-bottom {
+            /* O gradiente Laranja/Vermelho/Branco */
+            background: linear-gradient(90deg, #ff0000, #ff6b00, #ffffff, #ff6b00, #ff0000);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: shineEffect 2s linear infinite; /* O brilho se move */
-            text-align: center;
-            letter-spacing: 2px;
-            padding: 0 20px;
+            animation: shineEffect 2s linear infinite;
+            font-weight: 900;
         }
 
-        /* Animação que remove a tela preta */
+        .intro-top {
+            font-size: 130px;
+            line-height: 0.9;
+            letter-spacing: -2px;
+        }
+
+        .intro-bottom {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin-top: -10px;
+        }
+
         @keyframes fadeOutIntro {
             0% { opacity: 1; visibility: visible; }
-            100% { opacity: 0; visibility: hidden; pointer-events: none; } /* Pointer events none permite clicar no site depois */
+            100% { opacity: 0; visibility: hidden; pointer-events: none; }
         }
 
-        /* Animação do brilho passando texto */
         @keyframes shineEffect {
             to { background-position: 200% center; }
         }
 
-        /* Ajuste do Intro para celular */
+        /* Ajuste da Intro para Celular */
         @media (max-width: 768px) {
-            .intro-text {
-                font-size: 30px; /* Menor no celular */
-            }
+            .intro-top { font-size: 65px; }
+            .intro-bottom { font-size: 24px; letter-spacing: 3px; }
         }
-        /* --------------------------------------------- */
+        /* ----------------------------------------------------- */
 
         .bg-animation {
             position: fixed;
@@ -590,6 +603,15 @@
                 font-size: 24px;
                 letter-spacing: 3px;
             }
+            
+            /* Ajuste da Intro para mobile */
+            .intro-top {
+                font-size: 65px;
+            }
+            .intro-bottom {
+                font-size: 24px;
+                letter-spacing: 3px;
+            }
 
             .hero-content p {
                 font-size: 16px;
@@ -646,7 +668,10 @@
 <body>
     
     <div class="intro-overlay">
-        <h1 class="intro-text">Tomato Entertainment</h1>
+        <div class="intro-content">
+            <span class="intro-top">TOMATO</span>
+            <span class="intro-bottom">ENTERTAINMENT</span>
+        </div>
     </div>
     <div class="bg-animation"></div>
     <div class="particles">
