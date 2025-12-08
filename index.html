@@ -173,16 +173,41 @@
         }
 
         .hero-content h1 {
-            font-size: 80px;
-            font-weight: 900;
+            display: flex; /* Permite controlar o alinhamento */
+            flex-direction: column; /* Coloca um embaixo do outro */
+            align-items: center; /* Centraliza */
             margin-bottom: 20px;
+            /* Mantém o gradiente bonito */
             background: linear-gradient(135deg, #ff0000, #ff6b00, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
-            letter-spacing: 2px;
-            word-wrap: break-word;
+        }
+
+        .title-top {
+            font-size: 130px; /* TOMATO fica gigante */
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -2px; /* Junta um pouquinho as letras */
+        }
+
+        .title-bottom {
+            font-size: 48px; /* ENTERTAINMENT fica menor para caber na mesma largura */
+            font-weight: 700;
+            letter-spacing: 6px; /* Espaça as letras para esticar a palavra */
+            margin-top: -10px; /* Aproxima da linha de cima */
+        }
+
+        /* AJUSTE PARA O CELULAR (IMPORTANTE) */
+        @media (max-width: 768px) {
+            .title-top {
+                font-size: 65px; /* Reduz no mobile */
+            }
+            .title-bottom {
+                font-size: 24px; /* Reduz no mobile */
+                letter-spacing: 3px;
+            }
         }
 
         .hero-content p {
@@ -595,7 +620,10 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>TOMATO ENTERTAINMENT</h1>
+            <h1>
+    <span class="title-top">TOMATO</span>
+    <span class="title-bottom">ENTERTAINMENT</span>
+</h1>
             <p>Desenvolvendo experiências digitais extraordinárias</p>
             <a href="#games" class="cta-button">Explorar Jogos</a>
         </div>
