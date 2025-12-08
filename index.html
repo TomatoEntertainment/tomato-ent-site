@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomato Entertainment - Jogos Digitais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(45deg, #ff0000, #ff6b00, #ff0000, #8b0000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.1;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            animation: float-particle 20s infinite;
+        }
+
+        .particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 6px; height: 6px; left: 20%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 3px; height: 3px; left: 30%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 5px; height: 5px; left: 40%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 4px; height: 4px; left: 50%; animation-delay: 8s; }
+        .particle:nth-child(6) { width: 6px; height: 6px; left: 60%; animation-delay: 10s; }
+        .particle:nth-child(7) { width: 3px; height: 3px; left: 70%; animation-delay: 12s; }
+        .particle:nth-child(8) { width: 5px; height: 5px; left: 80%; animation-delay: 14s; }
+        .particle:nth-child(9) { width: 4px; height: 4px; left: 90%; animation-delay: 16s; }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff0000, #ff6b00);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #ff6b00;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 80px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff0000, #ff6b00, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.5));
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #cccccc;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4), 0 0 40px rgba(255, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(255, 0, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .games-section {
+            position: relative;
+            padding: 100px 50px;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.3));
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff0000, #ff6b00, transparent);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(255, 0, 0, 0.4), 0 0 50px rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 107, 0, 0.8);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 250px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(20, 20, 20, 0.8));
+        }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s;
+        }
+
+        .game-card:hover .game-image img {
+            transform: scale(1.1);
+        }
+
+        .game-info {
+            padding: 30px;
+            position: relative;
+        }
+
+        .game-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, #00ff00, #00cc00);
+            color: #000;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3);
+            animation: glow-green 2s ease-in-out infinite;
+        }
+
+        @keyframes glow-green {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 255, 0, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(0, 255, 0, 0.6); }
+        }
+
+        .coming-soon-badge {
+            background: linear-gradient(135deg, #ff6b00, #ff0000);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            animation: glow-red 2s ease-in-out infinite;
+        }
+
+        @keyframes glow-red {
+            0%, 100% { box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(255, 0, 0, 0.6); }
+        }
+
+        .game-info h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .game-info p {
+            color: #cccccc;
+            line-height: 1.7;
+        }
+
+        .about-section {
+            position: relative;
+            padding: 100px 50px;
+            background: rgba(255, 0, 0, 0.03);
+            z-index: 1;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+        }
+
+        .about-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            text-align: left;
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.9;
+            color: #cccccc;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .about-text p::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 3px;
+            height: 20px;
+            background: linear-gradient(180deg, #ff0000, #ff6b00);
+            border-radius: 2px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            box-shadow: 0 20px 60px rgba(255, 0, 0, 0.4);
+            border: 3px solid rgba(255, 107, 0, 0.4);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateY(-100%); }
+            100% { transform: rotate(45deg) translateY(100%); }
+        }
+
+        .about-image:hover {
+            transform: scale(1.03) rotate(2deg);
+            box-shadow: 0 30px 80px rgba(255, 0, 0, 0.5);
+        }
+
+        footer {
+            position: relative;
+            padding: 50px;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.95);
+            border-top: 2px solid rgba(255, 0, 0, 0.3);
+            z-index: 1;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        footer p {
+            color: #888888;
+            margin: 5px 0;
+        }
+
+        footer p:first-child {
+            font-weight: bold;
+            color: #aaaaaa;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 50px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            nav {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+
+            .about-text p::before {
+                display: none;
+            }
+
+            .about-image {
+                height: 350px;
+                font-size: 80px;
+            }
+
+            .section-title {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <header>
+        <div class="logo">🍅 TOMATO</div>
+        <nav>
+            <a href="#games">Jogos</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>TOMATO ENTERTAINMENT</h1>
+            <p>Desenvolvendo experiências digitais extraordinárias</p>
+            <a href="#games" class="cta-button">Explorar Jogos</a>
+        </div>
+    </section>
+
+    <section id="games" class="games-section">
+        <h2 class="section-title">Nossos Jogos</h2>
+        <div class="games-grid">
+            <a href="https://play.google.com/store/apps/details?id=com.TomatoEntertainment.FlappySpace&hl=" target="_blank" class="game-card">
+                <div class="game-image">
+                    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTw7bWvZ8qdI4jTGl90os7Y_z3gfZj8OWbTFrEAJmEdKs24-dNC" alt="Flappy Space" style="width: 100%; height: 100%; object-fit: contain; background: linear-gradient(135deg, #1a0033, #330066);">
+                </div>
+                <div class="game-info">
+                    <span class="game-badge">DISPONÍVEL</span>
+                    <h3>Flappy Space</h3>
+                    <p>Bem-vindo ao Flappy Space! Toque para desviar de meteoros. Desbloqueie novas naves e bata o seu recorde. Até onde consegue voar?</p>
+                </div>
+            </a>
+            <div class="game-card" style="cursor: default;">
+                <div class="game-image" style="background: linear-gradient(135deg, #ff0000, #ff6b00); font-size: 80px;">
+                    🎮
+                </div>
+                <div class="game-info">
+                    <span class="game-badge coming-soon-badge">EM BREVE</span>
+                    <h3>Próximo Lançamento</h3>
+                    <p>Estamos trabalhando em algo incrível! Fique ligado nas nossas redes sociais para ser o primeiro a saber sobre nosso próximo grande lançamento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre" class="about-section">
+        <h2 class="section-title">Sobre Nós</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>A Tomato Entertainment nasceu da paixão por criar experiências digitais inesquecíveis. Somos um estúdio independente dedicado a desenvolver jogos inovadores que desafiam as convenções e encantam jogadores ao redor do mundo.</p>
+                
+                <p>Nossa equipe é formada por desenvolvedores, artistas e designers talentosos que compartilham uma visão comum: transformar ideias criativas em jogos extraordinários que deixam uma marca duradoura na indústria.</p>
+                
+                <p>Combinamos tecnologia de ponta com narrativas envolventes e mecânicas de gameplay únicas para criar mundos que os jogadores amam explorar. Cada projeto é uma nova oportunidade de ultrapassar limites e surpreender nossa comunidade.</p>
+
+                <p>Acreditamos que os melhores jogos nascem da colaboração, criatividade e dedicação incansável à excelência. É isso que nos move todos os dias.</p>
+            </div>
+            <div class="about-image">
+                🎮
+            </div>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <p>&copy; 2024 Tomato Entertainment. Todos os direitos reservados.</p>
+        <p>Criando o futuro do entretenimento digital</p>
+    </footer>
+</body>
+</html>
