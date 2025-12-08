@@ -32,7 +32,6 @@
             opacity: 0.1;
         }
 
-        /* Floating particles */
         .particles {
             position: fixed;
             width: 100%;
@@ -172,12 +171,12 @@
             max-width: 1200px;
         }
 
+        /* --- ESTILO DO TÍTULO DIVIDIDO --- */
         .hero-content h1 {
-            display: flex; /* Permite controlar o alinhamento */
-            flex-direction: column; /* Coloca um embaixo do outro */
-            align-items: center; /* Centraliza */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 20px;
-            /* Mantém o gradiente bonito */
             background: linear-gradient(135deg, #ff0000, #ff6b00, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -186,29 +185,19 @@
         }
 
         .title-top {
-            font-size: 130px; /* TOMATO fica gigante */
+            font-size: 130px;
             font-weight: 900;
             line-height: 0.9;
-            letter-spacing: -2px; /* Junta um pouquinho as letras */
+            letter-spacing: -2px;
         }
 
         .title-bottom {
-            font-size: 48px; /* ENTERTAINMENT fica menor para caber na mesma largura */
+            font-size: 48px;
             font-weight: 700;
-            letter-spacing: 6px; /* Espaça as letras para esticar a palavra */
-            margin-top: -10px; /* Aproxima da linha de cima */
+            letter-spacing: 6px;
+            margin-top: -10px;
         }
-
-        /* AJUSTE PARA O CELULAR (IMPORTANTE) */
-        @media (max-width: 768px) {
-            .title-top {
-                font-size: 65px; /* Reduz no mobile */
-            }
-            .title-bottom {
-                font-size: 24px; /* Reduz no mobile */
-                letter-spacing: 3px;
-            }
-        }
+        /* --------------------------------- */
 
         .hero-content p {
             font-size: 24px;
@@ -259,6 +248,18 @@
             padding: 100px 50px;
             z-index: 1;
         }
+
+        /* --- NOVA LINHA SEPARADORA ACIMA DOS JOGOS --- */
+        .games-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+        }
+        /* --------------------------------------------- */
 
         .section-title {
             text-align: center;
@@ -396,7 +397,7 @@
 
         @keyframes glow-red {
             0%, 100% { box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-            50% { box-shadow: 0 4px 25px rgba(0, 255, 0, 0.6); }
+            50% { box-shadow: 0 4px 25px rgba(255, 0, 0, 0.6); }
         }
 
         .game-info h3 {
@@ -519,7 +520,7 @@
             color: #aaaaaa;
         }
 
-        /* --- OTIMIZAÇÃO PARA MOBILE (CORREÇÃO DO CORTE) --- */
+        /* --- OTIMIZAÇÃO PARA MOBILE --- */
         @media (max-width: 768px) {
             header {
                 padding: 15px 20px;
@@ -528,28 +529,30 @@
             }
 
             .logo {
-                font-size: 24px; /* Logo um pouco menor no mobile */
+                font-size: 24px;
             }
 
             .hero {
-                padding: 0 30px; /* Mais espaço lateral para não cortar */
-                min-height: 80vh; /* Altura um pouco menor no mobile */
+                padding: 0 30px;
+                min-height: 80vh;
             }
 
-            .hero-content h1 {
-                font-size: 32px; /* Fonte BEM menor para caber */
-                line-height: 1.2;
-                letter-spacing: 0; /* Remove espaçamento entre letras */
-                word-wrap: break-word; /* Garante que quebre se precisar */
+            /* Ajuste do título dividido no mobile */
+            .title-top {
+                font-size: 65px;
+            }
+            .title-bottom {
+                font-size: 24px;
+                letter-spacing: 3px;
             }
 
             .hero-content p {
-                font-size: 16px; /* Fonte menor para o parágrafo */
-                padding: 0 10px; /* Um pouco de respiro lateral no texto */
+                font-size: 16px;
+                padding: 0 10px;
             }
 
             .cta-button {
-                padding: 15px 35px; /* Botão um pouco menor */
+                padding: 15px 35px;
                 font-size: 16px;
             }
 
@@ -621,9 +624,9 @@
     <section class="hero">
         <div class="hero-content">
             <h1>
-    <span class="title-top">TOMATO</span>
-    <span class="title-bottom">ENTERTAINMENT</span>
-</h1>
+                <span class="title-top">TOMATO</span>
+                <span class="title-bottom">ENTERTAINMENT</span>
+            </h1>
             <p>Desenvolvendo experiências digitais extraordinárias</p>
             <a href="#games" class="cta-button">Explorar Jogos</a>
         </div>
@@ -674,8 +677,8 @@
     </section>
 
   <footer id="contato">
-        <p>© 2025 Tomato Entertainment. Todos os direitos reservados.</p>
-        
+        <p>© 2024 Tomato Entertainment. Todos os direitos reservados.</p>
+        <p>Criando o futuro do entretenimento digital</p>
         
         <p style="margin: 15px 0;">
             <span style="color: #ff0000;">Contato:</span> 
